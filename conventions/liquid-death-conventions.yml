@@ -1,0 +1,121 @@
+generated: '2026-08-01'
+method: searched
+source: https://liquiddeath.com/agents.md
+supplemental_sources:
+  - https://liquiddeath.com/robots.txt
+  - https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json
+  - openapi/liquid-death-storefront-openapi.yml
+summary: >-
+  Cross-cutting request/response semantics for Liquid Death's two agent surfaces: the anonymous
+  read-only storefront JSON API and the identity-gated UCP MCP transport.
+authentication:
+  storefront_json: none
+  mcp: UCP agent profile via the UCP-Agent header (meta.ucp-agent.profile); required
+  customer_scoped: OpenID Connect authorization code + PKCE (S256)
+  see: authentication/liquid-death-authentication.yml
+idempotency:
+  supported: true
+  header: Idempotency-Key
+  json_rpc_param: meta.idempotency-key
+  format: uuid
+  surface: UCP MCP transport
+  required_on:
+    - complete_checkout
+    - cancel_checkout
+    - cancel_cart
+  optional_on:
+    - create_checkout
+    - update_checkout
+    - create_cart
+    - update_cart
+    - search_catalog
+    - lookup_catalog
+    - get_product
+    - get_checkout
+    - get_cart
+    - get_order
+  retention: not published
+  description: >-
+    "Unique key for retry safety. Maps to HTTP Idempotency-Key header." The three destructive or
+    money-moving operations make the key mandatory rather than advisory, which is stricter than the
+    common industry pattern of an optional key on all writes.
+  source: https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json
+  storefront_json: not applicable (read-only surface, no unsafe methods)
+pagination:
+  surface: storefront JSON
+  style: offset
+  params:
+    - {name: limit, in: query, description: page size}
+    - {name: page, in: query, description: 1-indexed page number}
+  response_fields: 'none — the response is a bare {products: [...]} envelope with no cursor or total'
+  verified: 'GET /collections/all/products.json?limit=1&page=2 returned 200 on 2026-08-01'
+  mcp: >-
+    UCP catalog search pagination is governed by the negotiated
+    dev.ucp.shopping.catalog.search capability schema rather than by store convention.
+versioning:
+  storefront_json:
+    scheme: unversioned
+    note: The storefront JSON paths carry no version segment.
+  mcp:
+    scheme: dated protocol versions
+    current: '2026-04-08'
+    also_supported: ['2026-01-23']
+    negotiation: >-
+      Version-pinned profiles are served at /.well-known/ucp/{version}; the unpinned
+      /.well-known/ucp advertises the current version and the full supported_versions map.
+    see: lifecycle/liquid-death-lifecycle.yml
+error_envelope:
+  storefront_json:
+    shape: '{"errors": "<message>"}'
+    content_type: application/json
+    note: A missing product handle returns 404 with a JSON body, not an HTML page.
+  mcp:
+    shape: JSON-RPC 2.0 error object
+    fields: [jsonrpc, id, error.code, error.message, error.data.code, error.data.content, error.data.continue_url]
+    observed_example: >-
+      {"jsonrpc":"2.0","id":1,"error":{"code":-32001,"message":"UCP discovery failed",
+      "data":{"code":"invalid_profile_url","content":"Unable to fetch agent profile: Missing profile uri",
+      "continue_url":"https://liquiddeath.myshopify.com/"}}}
+    note: >-
+      The data.continue_url field is an agent-recovery affordance — it hands the agent a human-completable
+      URL when the machine path is blocked. See errors/liquid-death-problem-types.yml.
+  rfc9457: false
+rate_limiting:
+  documented: true
+  surface: UCP MCP endpoint
+  scope: per IP
+  signal: HTTP 429
+  guidance: "Respect rate limits. The MCP endpoint is rate-limited per IP. Back off on 429 responses."
+  headers_published: false
+  source: https://liquiddeath.com/agents.md
+request_tracing:
+  request_id_header: not published
+buyer_context:
+  documented: true
+  params:
+    - context.address_country
+    - context.currency
+  guidance: "Use buyer context. Pass context.address_country and context.currency for accurate pricing and availability."
+  source: https://liquiddeath.com/agents.md
+human_in_the_loop:
+  required_for: [payment, checkout completion, order placement]
+  rule: >-
+    Agents must not complete payment without explicit, contemporaneous buyer consent. Scripted form
+    fills, browser automation, and end-to-end agent flows that finalize payment are forbidden in
+    robots.txt. Agents that cannot obtain contemporaneous approval are directed to route the purchase
+    through Shop Pay via the Shop skill instead.
+  sources:
+    - https://liquiddeath.com/agents.md
+    - https://liquiddeath.com/robots.txt
+agent_routing:
+  rule: >-
+    The AJAX storefront surfaces (/cart.js, /recommendations/products) are Disallowed in robots.txt with
+    an explicit instruction that agents should use UCP/MCP instead. Read-only browsing over the product
+    and collection JSON endpoints is permitted.
+  source: https://liquiddeath.com/robots.txt
+cross_links:
+  errors: errors/liquid-death-problem-types.yml
+  lifecycle: lifecycle/liquid-death-lifecycle.yml
+  authentication: authentication/liquid-death-authentication.yml
+  scopes: scopes/liquid-death-scopes.yml
+  mcp: mcp/liquid-death-mcp.yml

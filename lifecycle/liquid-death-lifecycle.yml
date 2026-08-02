@@ -1,0 +1,53 @@
+generated: '2026-08-01'
+method: derived
+source: https://liquiddeath.com/.well-known/ucp
+note: >-
+  Liquid Death publishes no API changelog, deprecation policy, SLA, or status page of its own. What it
+  does publish is a dated protocol-version support window in its UCP merchant profile, recorded below.
+  No StatusPage or Deprecation pointer is emitted in apis.yml because the provider does not publish
+  either — the underlying platform's status page belongs to Shopify, not to Liquid Death.
+versioning:
+  storefront_json:
+    scheme: unversioned
+    current: null
+    note: The read-only product/collection JSON paths carry no version segment.
+  ucp_mcp:
+    scheme: dated
+    current: '2026-04-08'
+    supported:
+      - version: '2026-04-08'
+        status: current
+        profile: https://liquiddeath.myshopify.com/.well-known/ucp/2026-04-08
+      - version: '2026-01-23'
+        status: supported
+        profile: https://liquiddeath.myshopify.com/.well-known/ucp/2026-01-23
+    negotiation: >-
+      Capabilities carry a requires.protocol.min floor (e.g. dev.ucp.shopping.fulfillment and
+      dev.shopify.catalog both require min 2026-04-08), so a client pinned to 2026-01-23 negotiates a
+      strictly smaller capability set.
+    discovery: https://liquiddeath.com/.well-known/ucp
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: unknown
+  note: >-
+    No deprecation or sunset policy is published. The supported_versions map is a de facto support
+    window (two dated versions live simultaneously) but carries no removal date or notice commitment.
+sla:
+  url: null
+  uptime_target: null
+status_page:
+  provider_published: null
+  platform: https://www.shopifystatus.com/
+  note: >-
+    Liquid Death publishes no status page. Shopify's platform status page is recorded here for
+    operational context only; it is not a Liquid Death property and is deliberately NOT wired as a
+    StatusPage pointer in apis.yml.
+changelog:
+  url: null
+  published: false
+deprecated_operations: []
+gaps:
+  - No changelog for either the storefront JSON surface or the store's UCP capability set.
+  - No deprecation notice period for the older UCP version (2026-01-23).
+  - No provider-published status page or uptime commitment for the MCP endpoint.

@@ -1,0 +1,50 @@
+generated: '2026-08-01'
+method: probed
+source: https://liquiddeath.com/.well-known/openid-configuration
+summary:
+  scheme_count: 1
+  scope_count: 4
+  note: >-
+    Scopes are taken verbatim from the scopes_supported array of the store's own OIDC/OAuth discovery
+    documents. Liquid Death publishes no separate scopes reference page; these four are the complete
+    advertised set.
+schemes:
+  - name: customer-account-oidc
+    type: openIdConnect
+    issuer: https://shopify.com/authentication/7942897737
+    source: well-known/liquid-death-openid-configuration.json
+    flows:
+      - flow: authorizationCode
+        authorizationUrl: https://account.liquiddeath.com/authentication/oauth/authorize
+        tokenUrl: https://account.liquiddeath.com/authentication/oauth/token
+        pkce_required_methods: [S256]
+scopes:
+  - scope: openid
+    description: Standard OpenID Connect scope; requests an ID token identifying the customer.
+    flows: [authorizationCode]
+    sources: [well-known/liquid-death-openid-configuration.json, well-known/liquid-death-oauth-authorization-server.json]
+  - scope: email
+    description: Releases the customer's email address and email_verified claim.
+    flows: [authorizationCode]
+    sources: [well-known/liquid-death-openid-configuration.json, well-known/liquid-death-oauth-authorization-server.json]
+  - scope: 'customer-account-api:full'
+    description: >-
+      Full access to the customer account API for this store on behalf of the signed-in customer
+      (orders, addresses, subscriptions, profile).
+    flows: [authorizationCode]
+    sources: [well-known/liquid-death-openid-configuration.json, well-known/liquid-death-oauth-authorization-server.json]
+  - scope: 'customer-account-mcp-api:full'
+    description: >-
+      Full access to the customer account surface over MCP — the agent-mediated equivalent of
+      customer-account-api:full. Its presence is what makes customer-scoped agent operations
+      (e.g. get_order) possible alongside the anonymous UCP shopping transport.
+    flows: [authorizationCode]
+    sources: [well-known/liquid-death-openid-configuration.json, well-known/liquid-death-oauth-authorization-server.json]
+gaps:
+  - >-
+    No granular read/write scope decomposition is offered — both non-OIDC scopes are ":full". An agent
+    that only needs order status must request the same authority as one that can mutate the account.
+x-evidence:
+  fetched: '2026-08-01'
+  url: https://liquiddeath.com/.well-known/openid-configuration
+  http_status: 200

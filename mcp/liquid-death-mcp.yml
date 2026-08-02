@@ -1,0 +1,202 @@
+generated: '2026-08-01'
+method: searched
+status: published
+source: https://liquiddeath.com/.well-known/ucp
+summary: >-
+  Liquid Death publishes a live, hosted MCP server as the Universal Commerce Protocol (UCP) shopping
+  transport for its store. It is advertised in three independent places on the provider's own host —
+  robots.txt, /agents.md (mirrored at /llms.txt), and the /.well-known/ucp merchant profile — so this is
+  a genuine first-party agent surface, not a derived candidate.
+server:
+  name: liquid-death-ucp-shopping
+  transport: http
+  protocol: MCP over JSON-RPC 2.0
+  url: https://liquiddeath.myshopify.com/api/ucp/mcp
+  alias_url: https://liquiddeath.com/api/ucp/mcp
+  advertised_in:
+    - https://liquiddeath.com/robots.txt
+    - https://liquiddeath.com/agents.md
+    - https://liquiddeath.com/llms.txt
+    - https://liquiddeath.com/.well-known/ucp
+protocol:
+  name: Universal Commerce Protocol
+  spec: https://ucp.dev/2026-04-08/specification/overview/
+  service: dev.ucp.shopping
+  version: '2026-04-08'
+  supported_versions:
+    - '2026-04-08'
+    - '2026-01-23'
+  schema: https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json
+  schema_file: liquid-death-ucp-shopping-mcp.openrpc.json
+  alternate_transports:
+    - transport: embedded
+      schema: https://ucp.dev/2026-04-08/services/shopping/embedded.openrpc.json
+introspection:
+  tools_list_attempted: true
+  tools_list_status: 422
+  gated: true
+  gate: >-
+    tools/list returns JSON-RPC error -32001 "UCP discovery failed" with data.code=invalid_profile_url
+    ("Unable to fetch agent profile: Missing profile uri"). The server requires the calling agent to
+    identify itself with a resolvable UCP agent profile URL via the UCP-Agent header (meta.ucp-agent.profile).
+    API Evangelist does not operate a UCP agent profile, so the live tool manifest could not be read
+    anonymously.
+  fallback: >-
+    The tool list and full input schemas below are taken verbatim from the canonical UCP Shopping
+    OpenRPC document that this merchant's own /.well-known/ucp profile declares as the schema for its
+    MCP transport. They are the real contract, not a guess — but they describe the UCP service class,
+    so per-merchant capability negotiation may narrow what this store actually answers.
+authentication:
+  agent_identity:
+    header: UCP-Agent
+    json_rpc_param: meta.ucp-agent.profile
+    required: true
+    description: URL to the calling platform's UCP profile document.
+  customer_identity:
+    type: oauth2
+    note: >-
+      Customer-scoped operations use the Shopify-issued customer account OIDC provider for this store;
+      see authentication/liquid-death-authentication.yml. The scope
+      customer-account-mcp-api:full is advertised in the store's OIDC discovery document.
+idempotency:
+  header: Idempotency-Key
+  json_rpc_param: meta.idempotency-key
+  format: uuid
+  description: Unique key for retry safety. Maps to the HTTP Idempotency-Key header.
+  required_on: [complete_checkout, cancel_checkout, cancel_cart]
+  optional_on: [create_checkout, get_checkout, update_checkout, create_cart, get_cart, update_cart, search_catalog, lookup_catalog, get_order, get_product]
+rate_limits:
+  documented: true
+  scope: per IP
+  signal: HTTP 429
+  guidance: Back off on 429 responses.
+  source: https://liquiddeath.com/llms.txt
+human_in_the_loop:
+  required: true
+  rule: >-
+    "Checkout requires human approval. Agents must not complete payment without explicit buyer consent."
+    Stated in both /agents.md and robots.txt. complete_checkout is the only tool that moves money and it
+    is gated on contemporaneous buyer approval.
+  source: https://liquiddeath.com/agents.md
+tools:
+  - name: search_catalog
+    category: catalog
+    description: Search for products in the catalog using query text.
+    input_schema: https://ucp.dev/2026-04-08/schemas/shopping/catalog_search.json#/$defs/search_request
+    capability: dev.ucp.shopping.catalog.search
+    idempotency_key_required: false
+  - name: lookup_catalog
+    category: catalog
+    description: Batch lookup products or variants by identifier.
+    input_schema: https://ucp.dev/2026-04-08/schemas/shopping/catalog_lookup.json#/$defs/lookup_request
+    capability: dev.ucp.shopping.catalog.lookup
+    idempotency_key_required: false
+  - name: get_product
+    category: catalog
+    description: Get product details.
+    input_schema: https://ucp.dev/2026-04-08/schemas/shopping/catalog_lookup.json#/$defs/get_product_request
+    capability: dev.ucp.shopping.catalog.lookup
+    idempotency_key_required: false
+  - name: create_cart
+    category: cart
+    description: Create a new cart session.
+    input_schema: https://ucp.dev/2026-04-08/schemas/shopping/cart.json
+    capability: dev.ucp.shopping.cart
+    idempotency_key_required: false
+  - name: get_cart
+    category: cart
+    description: Get cart.
+    capability: dev.ucp.shopping.cart
+    idempotency_key_required: false
+  - name: update_cart
+    category: cart
+    description: Update cart.
+    input_schema: https://ucp.dev/2026-04-08/schemas/shopping/cart.json
+    capability: dev.ucp.shopping.cart
+    idempotency_key_required: false
+  - name: cancel_cart
+    category: cart
+    description: Cancel cart.
+    capability: dev.ucp.shopping.cart
+    idempotency_key_required: true
+  - name: create_checkout
+    category: checkout
+    description: Create a new checkout session.
+    input_schema: https://ucp.dev/2026-04-08/schemas/shopping/checkout.json
+    capability: dev.ucp.shopping.checkout
+    idempotency_key_required: false
+  - name: get_checkout
+    category: checkout
+    description: Get checkout.
+    capability: dev.ucp.shopping.checkout
+    idempotency_key_required: false
+  - name: update_checkout
+    category: checkout
+    description: Update checkout — set shipping address and method.
+    input_schema: https://ucp.dev/2026-04-08/schemas/shopping/checkout.json
+    capability: dev.ucp.shopping.checkout
+    idempotency_key_required: false
+  - name: complete_checkout
+    category: checkout
+    description: Complete checkout and place order. Requires explicit buyer approval of payment.
+    input_schema: https://ucp.dev/2026-04-08/schemas/shopping/checkout.json
+    capability: dev.ucp.shopping.checkout
+    idempotency_key_required: true
+    human_in_the_loop: required
+  - name: cancel_checkout
+    category: checkout
+    description: Cancel checkout.
+    capability: dev.ucp.shopping.checkout
+    idempotency_key_required: true
+  - name: get_order
+    category: order
+    description: Get order.
+    capability: dev.ucp.shopping.order
+    idempotency_key_required: false
+capabilities:
+  - id: dev.ucp.shopping.checkout
+    version: '2026-04-08'
+  - id: dev.ucp.shopping.cart
+    version: '2026-04-08'
+  - id: dev.ucp.shopping.order
+    version: '2026-04-08'
+  - id: dev.ucp.shopping.catalog.search
+    version: '2026-04-08'
+  - id: dev.ucp.shopping.catalog.lookup
+    version: '2026-04-08'
+  - id: dev.ucp.shopping.fulfillment
+    version: '2026-04-08'
+    config:
+      allows_multi_destination: {shipping: false}
+      allows_method_combinations: [[shipping]]
+  - id: dev.ucp.shopping.discount
+    version: '2026-04-08'
+  - id: dev.shopify.catalog
+    version: '2026-04-08'
+    spec: https://shopify.dev/docs/agents/catalog/storefront-catalog
+payment_handlers:
+  - id: gpay
+    handler: com.google.pay
+    version: '2026-01-11'
+    card_networks: [VISA, MASTERCARD, AMEX, DISCOVER]
+  - id: shopify.card
+    handler: dev.shopify.card
+    version: '2026-01-15'
+    card_brands: [visa, master, american_express, discover, diners_club]
+  - id: shop_pay
+    handler: dev.shopify.shop_pay
+    version: '2026-04-08'
+recommended_agent_skill:
+  url: https://shop.app/SKILL.md
+  note: >-
+    The store's own agent instructions recommend that personal shopping assistants install the Shop
+    skill and route purchases through Shop Pay rather than scripting the storefront. This is a
+    third-party (Shopify) skill, not a Liquid Death artifact.
+x-evidence:
+  fetched: '2026-08-01'
+  urls:
+    - {url: 'https://liquiddeath.com/.well-known/ucp', http_status: 200, content_type: application/json}
+    - {url: 'https://liquiddeath.com/llms.txt', http_status: 200, content_type: text/plain}
+    - {url: 'https://liquiddeath.com/robots.txt', http_status: 200, content_type: text/plain}
+    - {url: 'https://liquiddeath.myshopify.com/api/ucp/mcp', http_status: 422, method: 'POST tools/list', note: agent-profile gated}
+    - {url: 'https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json', http_status: 200, content_type: application/json}

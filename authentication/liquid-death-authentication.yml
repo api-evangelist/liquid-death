@@ -1,0 +1,89 @@
+generated: '2026-08-01'
+method: probed
+source: https://liquiddeath.com/.well-known/openid-configuration
+docs: https://liquiddeath.com/agents.md
+summary:
+  types: [none, openIdConnect, oauth2, agentProfile]
+  api_key_in: []
+  oauth2_flows: [authorizationCode]
+  note: >-
+    Liquid Death runs three distinct access modes. The read-only storefront JSON surface is fully
+    anonymous. The UCP MCP transport requires an agent identity (a resolvable UCP agent profile URL,
+    not a bearer credential). Customer-scoped operations use a Shopify-issued OpenID Connect provider
+    on the store's own account subdomain.
+schemes:
+  - name: anonymous
+    type: none
+    applies_to: openapi/liquid-death-storefront-openapi.yml
+    description: >-
+      Every operation in the read-only storefront surface (/products/{handle}.json,
+      /collections/{handle}/products.json, /search, /sitemap.xml, /agents.md, /llms.txt,
+      /.well-known/ucp) returns 200 with no credential. Verified by live probe 2026-08-01.
+  - name: ucp-agent-profile
+    type: agentProfile
+    applies_to: mcp/liquid-death-mcp.yml
+    in: header
+    parameter_name: UCP-Agent
+    json_rpc_param: meta.ucp-agent.profile
+    format: uri
+    required: true
+    description: >-
+      The UCP MCP endpoint identifies the calling platform, not a user. The caller supplies a URL to its
+      own UCP profile document; the merchant fetches and validates it. An anonymous tools/list returns
+      JSON-RPC error -32001 invalid_profile_url. This is an identity requirement rather than an
+      authorization credential — it is what makes the agent attributable.
+    source: https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json
+  - name: customer-account-oidc
+    type: openIdConnect
+    openIdConnectUrl: https://liquiddeath.com/.well-known/openid-configuration
+    issuer: https://shopify.com/authentication/7942897737
+    description: >-
+      OpenID Connect provider for the Liquid Death customer account, hosted at
+      account.liquiddeath.com and issued by Shopify on behalf of the store.
+    endpoints:
+      authorization: https://account.liquiddeath.com/authentication/oauth/authorize
+      token: https://account.liquiddeath.com/authentication/oauth/token
+      end_session: https://account.liquiddeath.com/authentication/logout
+      jwks: https://account.liquiddeath.com/authentication/.well-known/jwks.json
+    flows:
+      - flow: authorizationCode
+        pkce: true
+        code_challenge_methods: [S256]
+        authorizationUrl: https://account.liquiddeath.com/authentication/oauth/authorize
+        tokenUrl: https://account.liquiddeath.com/authentication/oauth/token
+    grant_types_supported:
+      - authorization_code
+      - refresh_token
+      - 'urn:ietf:params:oauth:grant-type:jwt-bearer'
+    response_types_supported: [code]
+    token_endpoint_auth_methods_supported: [client_secret_basic]
+    id_token_signing_alg_values_supported: [RS256]
+    subject_types_supported: [public]
+    claims_supported: [iss, sub, aud, exp, iat, nonce, sid, email, email_verified]
+    scopes_supported:
+      - openid
+      - email
+      - 'customer-account-api:full'
+      - 'customer-account-mcp-api:full'
+    source: well-known/liquid-death-openid-configuration.json
+  - name: customer-account-oauth2
+    type: oauth2
+    description: >-
+      The same authorization server also publishes RFC 8414 OAuth 2.0 Authorization Server Metadata at
+      /.well-known/oauth-authorization-server with an identical payload, so plain OAuth 2.0 clients can
+      discover it without OIDC semantics.
+    metadata_url: https://liquiddeath.com/.well-known/oauth-authorization-server
+    source: well-known/liquid-death-oauth-authorization-server.json
+observations:
+  - >-
+    Publishing BOTH /.well-known/openid-configuration and /.well-known/oauth-authorization-server is
+    uncommon and materially improves discoverability for agent clients that only implement RFC 8414.
+  - >-
+    The customer-account-mcp-api:full scope indicates the identity provider is already wired for
+    MCP-mediated customer access, distinct from the anonymous UCP shopping transport.
+x-evidence:
+  fetched: '2026-08-01'
+  urls:
+    - {url: 'https://liquiddeath.com/.well-known/openid-configuration', http_status: 200}
+    - {url: 'https://liquiddeath.com/.well-known/oauth-authorization-server', http_status: 200}
+    - {url: 'https://account.liquiddeath.com/authentication/.well-known/jwks.json', http_status: 200}

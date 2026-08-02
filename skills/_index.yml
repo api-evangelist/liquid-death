@@ -1,0 +1,41 @@
+generated: '2026-08-01'
+method: generated
+source: openapi/liquid-death-storefront-openapi.yml + mcp/liquid-death-mcp.yml + https://liquiddeath.com/agents.md
+note: >-
+  Two skills, one per surface, mirroring the read/write split the store enforces. Every operationId and
+  tool name referenced below exists verbatim in the artifact named as its api.
+skills:
+  - file: liquid-death-browse-catalog.md
+    name: Browse the Liquid Death catalog
+    description: Anonymous read-only product and collection data, with the agent-disallowed paths called out.
+    api: openapi/liquid-death-storefront-openapi.yml
+    operations: [listCollectionProducts, getProduct, getSitemap]
+  - file: liquid-death-shop-with-ucp.md
+    name: Shop Liquid Death over UCP/MCP
+    description: >-
+      The full transactional flow over the Universal Commerce Protocol MCP endpoint, including the
+      UCP-Agent identity requirement, the mandatory Idempotency-Key on destructive tools, and the
+      human-approval-before-payment rule the store states in agents.md and robots.txt.
+    api: mcp/liquid-death-mcp.yml
+    operations:
+      - search_catalog
+      - lookup_catalog
+      - get_product
+      - create_cart
+      - update_cart
+      - get_cart
+      - cancel_cart
+      - create_checkout
+      - update_checkout
+      - complete_checkout
+      - cancel_checkout
+      - get_order
+provider_published_skills:
+  - url: https://shop.app/SKILL.md
+    name: Shop skill
+    owner: Shopify
+    first_party: false
+    note: >-
+      Liquid Death's own agents.md recommends personal shopping assistants install this cross-store
+      Shopify skill and transact via Shop Pay. It is recorded here because the provider recommends it,
+      but it is a Shopify artifact, not a Liquid Death one, so it is not vendored into this repo.

@@ -1,18 +1,100 @@
 aid: liquid-death
 name: Liquid Death
-description: 'Liquid Death is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Liquid Death is a Los Angeles beverage company founded in 2014 by Mike Cessario, Pat Cook and JonRyan
+  Riggins, selling still and sparkling mountain water, iced tea, flavored sparkling water, the Death Dust
+  electrolyte powder and a Sparkling Energy line, all in recyclable aluminum tallboys and marketed through
+  a deliberately horror-comedy brand voice. It has raised roughly $264M and was valued at $1.4B in its 2024
+  Series F. Liquid Death publishes no conventional developer portal, yet it is one of the more
+  agent-forward direct-to-consumer storefronts in the catalog: liquiddeath.com serves a first-party
+  agents.md (mirrored at /llms.txt), a dedicated agentic-discovery sitemap, an agent policy block inside
+  robots.txt, a Universal Commerce Protocol merchant profile at /.well-known/ucp, a live UCP shopping MCP
+  endpoint, and both OpenID Connect and RFC 8414 OAuth discovery documents for its customer account. The
+  storefront exposes an anonymous read-only product and collection JSON surface, while every cart,
+  checkout and order capability is confined to the identity-gated, idempotency-keyed MCP transport that
+  requires contemporaneous human approval before payment.
+image: https://liquiddeath.com/cdn/shop/files/Liquid-Death-Preview-Image_7033558e-a84d-4880-8a70-87e84739f262.jpg?v=1681949476
 url: https://raw.githubusercontent.com/api-evangelist/liquid-death/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
+x-tier: profiled
 x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-01'
 modified: '2026-08-01'
 tags:
 - Company
-apis: []
+- Beverages
+- Consumer Packaged Goods
+- Direct to Consumer
+- Ecommerce
+- Retail
+- Agentic Commerce
+- Universal Commerce Protocol
+- MCP
+- Shopify
+apis:
+- name: Liquid Death Storefront Read-Only JSON API
+  description: >-
+    The anonymous, read-only product and collection JSON surface Liquid Death documents for AI agents in
+    its agents.md, covering product records, collection listings, storefront search and the store-level
+    discovery documents. No authentication required. Contains no transactional capability by design.
+  humanURL: https://liquiddeath.com/agents.md
+  baseURL: https://liquiddeath.com
+  tags:
+  - Ecommerce
+  - Catalog
+  - Direct to Consumer
+  - Agentic Commerce
+  properties:
+  - type: Documentation
+    url: https://liquiddeath.com/agents.md
+  - type: OpenAPI
+    url: openapi/liquid-death-storefront-openapi.yml
+  - type: Overlay
+    url: overlays/liquid-death-storefront-overlay.yaml
+  - type: AgenticAccess
+    url: agentic-access/liquid-death-agentic-access.yml
+- name: Liquid Death UCP Shopping MCP
+  description: >-
+    Liquid Death's hosted Model Context Protocol server implementing the Universal Commerce Protocol
+    dev.ucp.shopping service — catalog search and lookup, cart, checkout, fulfillment, discount and
+    order. Advertised in robots.txt, agents.md and the /.well-known/ucp merchant profile. Requires a
+    resolvable UCP agent profile, mandates an Idempotency-Key on complete_checkout, cancel_checkout and
+    cancel_cart, and forbids completing payment without explicit buyer approval.
+  humanURL: https://liquiddeath.com/agents.md
+  baseURL: https://liquiddeath.myshopify.com/api/ucp/mcp
+  tags:
+  - Agentic Commerce
+  - MCP
+  - Universal Commerce Protocol
+  - Ecommerce
+  properties:
+  - type: Documentation
+    url: https://liquiddeath.com/agents.md
+  - type: MCPServer
+    url: mcp/liquid-death-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/liquid-death-tool-crosswalk.yml
+  - type: OpenRPC
+    url: mcp/liquid-death-ucp-shopping-mcp.openrpc.json
+- name: Liquid Death Customer Account OAuth
+  description: >-
+    The OpenID Connect and OAuth 2.0 authorization server for the Liquid Death customer account, hosted
+    at account.liquiddeath.com and discoverable from both /.well-known/openid-configuration and
+    /.well-known/oauth-authorization-server. Authorization code flow with PKCE (S256); advertises the
+    customer-account-api:full and customer-account-mcp-api:full scopes.
+  humanURL: https://liquiddeath.com/.well-known/openid-configuration
+  baseURL: https://account.liquiddeath.com/authentication
+  tags:
+  - Authentication
+  - OpenID Connect
+  - OAuth
+  properties:
+  - type: OpenIDConnect
+    url: well-known/liquid-death-openid-configuration.json
+  - type: OAuthScopes
+    url: scopes/liquid-death-scopes.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +102,73 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
+  url: https://liquiddeath.com/
+- type: Documentation
+  url: https://liquiddeath.com/agents.md
+- type: GettingStarted
+  url: https://liquiddeath.com/agents.md
+- type: LLMsTxt
+  url: llms/liquid-death-llms.txt
+- type: WellKnown
+  url: well-known/liquid-death-well-known.yml
+- type: OpenAPI
+  url: openapi/liquid-death-storefront-openapi.yml
+- type: Overlay
+  url: overlays/liquid-death-storefront-overlay.yaml
+- type: MCPServer
+  url: mcp/liquid-death-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/liquid-death-tool-crosswalk.yml
+- type: Authentication
+  url: authentication/liquid-death-authentication.yml
+- type: OAuthScopes
+  url: scopes/liquid-death-scopes.yml
+- type: Conventions
+  url: conventions/liquid-death-conventions.yml
+- type: Idempotency
+  url: conventions/liquid-death-conventions.yml
+- type: ErrorCatalog
+  url: errors/liquid-death-problem-types.yml
+- type: Conformance
+  url: conformance/liquid-death-conformance.yml
+- type: Lifecycle
+  url: lifecycle/liquid-death-lifecycle.yml
+- type: DataModel
+  url: data-model/liquid-death-data-model.yml
+- type: AgenticAccess
+  url: agentic-access/liquid-death-agentic-access.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DomainSecurity
+  url: security/liquid-death-domain-security.yml
+- type: FAQ
+  url: https://liquiddeath.com/pages/faq
+- type: Support
+  url: https://liquiddeath.com/pages/summon-us
+- type: Blog
+  url: https://liquiddeath.com/blogs/news
+- type: Shop
+  url: https://liquiddeath.com/collections/all
+- type: WhereToBuy
+  url: https://liquiddeath.com/pages/where-to-buy
+- type: Careers
+  url: https://liquiddeath.com/pages/careers
+- type: About
+  url: https://liquiddeath.com/pages/manifesto
+- type: TermsOfService
+  url: https://liquiddeath.com/policies/terms-of-service
+- type: PrivacyPolicy
+  url: https://liquiddeath.com/policies/privacy-policy
+- type: RefundPolicy
+  url: https://liquiddeath.com/policies/refund-policy
+- type: Instagram
+  url: https://www.instagram.com/liquiddeath/
+- type: TikTok
+  url: https://www.tiktok.com/@liquiddeath
+- type: SecondaryMarket
   url: https://forgeglobal.com/liquid-death_stock/
+x-enrichment:
+  date: '2026-08-01'
+  status: enriched
+  artifacts_added: 21
+  pass: local-v1

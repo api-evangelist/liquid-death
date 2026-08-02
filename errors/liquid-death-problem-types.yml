@@ -1,0 +1,69 @@
+generated: '2026-08-01'
+method: derived
+source: openapi/liquid-death-storefront-openapi.yml + observed live responses
+format: json-rpc-2.0 (MCP surface) / bare JSON envelope (storefront surface)
+rfc9457: false
+note: >-
+  Liquid Death publishes no error reference page. Every entry below was observed directly against the
+  live hosts on 2026-08-01 or is declared in the UCP OpenRPC document its /.well-known/ucp profile
+  points at. Nothing here is inferred from a generic template.
+envelopes:
+  storefront_json:
+    content_type: application/json
+    shape: '{"errors": "<message>"}'
+  mcp:
+    content_type: application/json
+    shape: JSON-RPC 2.0 error
+    fields:
+      - {name: error.code, type: integer, description: JSON-RPC or UCP application error code}
+      - {name: error.message, type: string, description: Human-readable summary}
+      - {name: error.data.code, type: string, description: Machine-readable UCP error slug}
+      - {name: error.data.content, type: string, description: Detail explaining what the caller must fix}
+      - {name: error.data.continue_url, type: string, format: uri, description: A human-completable URL to fall back to when the machine path is blocked}
+problems:
+  - status: 404
+    surface: storefront-json
+    title: Product or collection not found
+    detail: The requested handle does not resolve to a published resource.
+    content_type: application/json
+    source_operation: openapi/liquid-death-storefront-openapi.yml#getProduct
+    observed: 'GET /products/does-not-exist-xyz.json -> 404 application/json (2026-08-01)'
+  - status: 404
+    surface: storefront-json
+    title: Collection not found
+    source_operation: openapi/liquid-death-storefront-openapi.yml#listCollectionProducts
+  - status: 406
+    surface: storefront
+    title: Not acceptable
+    detail: >-
+      The account login path returns 406 to non-browser user agents. Account surfaces are not part of
+      the anonymous agent contract.
+    observed: 'GET /account/login -> 406 text/plain (2026-08-01)'
+  - status: 429
+    surface: mcp
+    title: Rate limited
+    detail: The MCP endpoint is rate-limited per IP.
+    remediation: Back off and retry with exponential delay.
+    documented_at: https://liquiddeath.com/agents.md
+  - status: 422
+    surface: mcp
+    json_rpc_code: -32001
+    error_code: invalid_profile_url
+    title: UCP discovery failed
+    detail: 'Unable to fetch agent profile: Missing profile uri'
+    remediation: >-
+      Send a UCP-Agent header (or meta.ucp-agent.profile) carrying a resolvable URL to your platform's
+      own UCP profile document, then retry.
+    continue_url: https://liquiddeath.myshopify.com/
+    observed: 'POST /api/ucp/mcp {"method":"tools/list"} without an agent profile -> 422 (2026-08-01)'
+    source_operation: mcp/liquid-death-mcp.yml
+agent_recovery_pattern:
+  name: continue_url
+  description: >-
+    The UCP error envelope carries a continue_url pointing at a human-completable web flow. This is a
+    genuinely agent-aware error design: rather than dead-ending a blocked agent, it hands back the URL
+    where a human can finish the job. Worth noting because it is rare in the catalog.
+gaps:
+  - No published error-code registry or error reference page on any Liquid Death host.
+  - No RFC 9457 application/problem+json responses on either surface.
+  - No Retry-After or RateLimit-* response headers documented for the 429 case.

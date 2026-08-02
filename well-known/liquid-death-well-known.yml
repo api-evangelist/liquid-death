@@ -1,0 +1,77 @@
+generated: '2026-08-01'
+method: probed
+source: https://liquiddeath.com/.well-known/
+host: https://liquiddeath.com
+notes: >-
+  Liquid Death's storefront runs on Shopify, so the /.well-known/ surface carries Shopify's customer
+  account OAuth/OIDC discovery documents plus the Universal Commerce Protocol (UCP) merchant profile.
+  Every path below was probed live on 2026-08-01. No security.txt is published on any host.
+documents:
+  - path: /.well-known/ucp
+    description: Universal Commerce Protocol merchant discovery profile (services, capabilities, payment handlers)
+    status: 200
+    content_type: application/json
+    file: liquid-death-ucp.json
+  - path: /.well-known/ucp/2026-04-08
+    description: Version-pinned UCP merchant profile for protocol version 2026-04-08
+    status: 200
+    content_type: application/json
+  - path: /.well-known/openid-configuration
+    description: OpenID Connect discovery for the Liquid Death customer account (Shopify-issued)
+    status: 200
+    content_type: application/json
+    file: liquid-death-openid-configuration.json
+  - path: /.well-known/oauth-authorization-server
+    description: RFC 8414 OAuth 2.0 Authorization Server Metadata (identical payload to the OIDC document)
+    status: 200
+    content_type: application/json
+    file: liquid-death-oauth-authorization-server.json
+  - path: /.well-known/security.txt
+    description: RFC 9116 security contact
+    status: 404
+  - path: /.well-known/api-catalog
+    description: RFC 9727 API catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    description: A2A 1.0.0 agent card
+    status: 404
+  - path: /.well-known/agent.json
+    description: Pre-0.3 A2A agent card
+    status: 404
+other_hosts:
+  - host: https://liquiddeath.myshopify.com
+    probed:
+      - {path: /.well-known/agent-card.json, status: 404}
+      - {path: /.well-known/agent.json, status: 404}
+  - host: https://account.liquiddeath.com
+    probed:
+      - {path: /authentication/.well-known/jwks.json, status: 200, content_type: application/json}
+      - {path: /.well-known/agent-card.json, status: 404}
+      - {path: /.well-known/agent.json, status: 404}
+adjacent_agent_documents:
+  - path: /agents.md
+    description: Canonical agent instruction document; declared in robots.txt and in sitemap_agentic_discovery.xml
+    status: 200
+    content_type: text/markdown
+  - path: /llms.txt
+    description: Verbatim mirror of /agents.md at the llms.txt convention path
+    status: 200
+    content_type: text/plain
+    file: ../llms/liquid-death-llms.txt
+  - path: /robots.txt
+    description: >-
+      Carries an agent policy block, not just crawl rules: it names the UCP discovery and MCP endpoints,
+      routes agents away from the AJAX cart surfaces toward UCP/MCP, and states the buyer-approval
+      invariant ("Checkouts are for humans").
+    status: 200
+    content_type: text/plain
+    file: liquid-death-robots.txt
+  - path: /sitemap_agentic_discovery.xml
+    description: A dedicated sitemap whose only entry is /agents.md
+    status: 200
+    content_type: application/xml
+x-evidence:
+  fetched: '2026-08-01'
+  method: HTTP GET, following redirects

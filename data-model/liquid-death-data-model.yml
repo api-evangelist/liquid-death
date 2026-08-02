@@ -1,0 +1,133 @@
+generated: '2026-08-01'
+method: derived
+source: openapi/liquid-death-storefront-openapi.yml + mcp/liquid-death-ucp-shopping-mcp.openrpc.json
+note: >-
+  Two entity clusters. The catalog cluster is derived from live storefront JSON responses observed on
+  2026-08-01. The commerce cluster is derived from the UCP capability set and MCP tool signatures this
+  merchant advertises; its field-level shape is defined by the ucp.dev capability schemas referenced
+  below rather than by anything Liquid Death publishes itself.
+entities:
+  - name: Product
+    cluster: catalog
+    surface: storefront-json
+    source: openapi/liquid-death-storefront-openapi.yml#/components/schemas/Product
+    id_field: id
+    natural_key: handle
+    key_fields: [id, handle, title, vendor, product_type, tags, published_at]
+  - name: Variant
+    cluster: catalog
+    surface: storefront-json
+    source: openapi/liquid-death-storefront-openapi.yml#/components/schemas/Variant
+    id_field: id
+    key_fields: [id, product_id, sku, barcode, price, price_currency, option1, option2, option3, requires_shipping]
+  - name: Image
+    cluster: catalog
+    surface: storefront-json
+    id_field: id
+    key_fields: [id, product_id, src, alt, width, height, variant_ids]
+  - name: Option
+    cluster: catalog
+    surface: storefront-json
+    key_fields: [name, position, values]
+    observed_values: [Flavors, Size]
+  - name: Collection
+    cluster: catalog
+    surface: storefront-json
+    natural_key: handle
+    note: >-
+      Addressed by handle at /collections/{handle}/products.json. The store does not publish a JSON
+      projection of the collection record itself, only of its products.
+    observed_handles: [all, water, merch-store, liquid-death-mountain-water, featured-merch, sweatshirts, hats-beanies, stickers-posters, other-cool-shit]
+  - name: Cart
+    cluster: commerce
+    surface: ucp-mcp
+    schema: https://ucp.dev/2026-04-08/schemas/shopping/cart.json
+    capability: dev.ucp.shopping.cart
+    id_field: id
+  - name: Checkout
+    cluster: commerce
+    surface: ucp-mcp
+    schema: https://ucp.dev/2026-04-08/schemas/shopping/checkout.json
+    capability: dev.ucp.shopping.checkout
+    id_field: id
+  - name: Order
+    cluster: commerce
+    surface: ucp-mcp
+    schema: https://ucp.dev/2026-04-08/schemas/shopping/order.json
+    capability: dev.ucp.shopping.order
+    id_field: id
+  - name: Customer
+    cluster: identity
+    surface: oidc
+    id_field: sub
+    key_fields: [sub, email, email_verified, sid]
+    source: well-known/liquid-death-openid-configuration.json
+relationships:
+  - from: Product
+    to: Variant
+    kind: has_many
+    via: variants[] / Variant.product_id
+    confidence: high
+    evidence: observed in the live /products/{handle}.json response
+  - from: Product
+    to: Image
+    kind: has_many
+    via: images[] / Image.product_id
+    confidence: high
+  - from: Product
+    to: Image
+    kind: has_one
+    via: image
+    note: The featured image, duplicated from images[].
+    confidence: high
+  - from: Product
+    to: Option
+    kind: has_many
+    via: options[]
+    confidence: high
+  - from: Image
+    to: Variant
+    kind: has_many
+    via: variant_ids[]
+    confidence: high
+  - from: Variant
+    to: Image
+    kind: has_one
+    via: image_id
+    confidence: high
+  - from: Collection
+    to: Product
+    kind: has_many
+    via: /collections/{handle}/products.json
+    confidence: high
+    note: Many-to-many in practice — a product appears in multiple collections.
+  - from: Cart
+    to: Variant
+    kind: has_many
+    via: cart line items reference catalog variants
+    confidence: medium
+    note: >-
+      Inferred from the UCP cart capability plus the catalog lookup capability it extends; the exact
+      line-item field name is defined in the ucp.dev cart schema, not by this merchant.
+  - from: Checkout
+    to: Cart
+    kind: belongs_to
+    via: dev.ucp.shopping.fulfillment and dev.ucp.shopping.discount both declare extends [checkout, cart]
+    confidence: high
+    evidence: /.well-known/ucp capability graph
+  - from: Order
+    to: Checkout
+    kind: belongs_to
+    via: complete_checkout places the order
+    confidence: high
+    evidence: OpenRPC summary "Complete checkout and place order"
+  - from: Customer
+    to: Order
+    kind: has_many
+    via: customer-account-api:full / customer-account-mcp-api:full scoped access
+    confidence: medium
+id_conventions:
+  storefront: 64-bit integer ids on Product, Variant and Image; human-readable slug handles on Product and Collection.
+  ucp: opaque string ids on Cart, Checkout and Order.
+  customer: OIDC subject identifier (public subject_type).
+render: null

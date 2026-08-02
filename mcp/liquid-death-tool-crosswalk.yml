@@ -1,0 +1,101 @@
+generated: '2026-08-01'
+method: derived
+source: mcp/liquid-death-mcp.yml + openapi/liquid-death-storefront-openapi.yml
+summary: >-
+  Liquid Death exposes two non-identical projections of one commerce core. The anonymous REST/JSON
+  storefront surface is READ-ONLY by design; every transactional capability (cart, checkout, order,
+  discount, fulfillment) exists only over the UCP MCP transport. This crosswalk records that split
+  rather than papering over it: 3 of 13 MCP tools have a REST analogue, 10 are MCP-only, and 4 REST
+  operations are discovery documents with no tool equivalent.
+surfaces:
+  openapi:
+    file: openapi/liquid-death-storefront-openapi.yml
+    base_url: https://liquiddeath.com
+    auth: none (anonymous)
+    gated: false
+    note: Generated from the endpoints the provider documents in /agents.md; every operation probed live.
+  mcp:
+    file: mcp/liquid-death-mcp.yml
+    url: https://liquiddeath.myshopify.com/api/ucp/mcp
+    gated: true
+    note: >-
+      tools/list requires a resolvable UCP agent profile (UCP-Agent header) and returned 422
+      invalid_profile_url anonymously. Tool names and input schemas were taken from the canonical
+      UCP Shopping OpenRPC document the merchant's own /.well-known/ucp profile declares.
+  graphql:
+    present: false
+    note: No GraphQL endpoint is advertised on any Liquid Death host.
+crosswalk:
+  - tool: search_catalog
+    category: catalog
+    rest: [searchStorefront]
+    binding: rest
+    confidence: medium
+    note: >-
+      Both search the same catalog, but the REST operation returns a rendered HTML results page while
+      search_catalog returns structured UCP catalog objects. The provider explicitly routes agents that
+      need structured search to the MCP tool. Not a drop-in substitute.
+  - tool: get_product
+    category: catalog
+    rest: [getProduct]
+    binding: rest
+    confidence: high
+    note: >-
+      getProduct returns the same product record anonymously at /products/{handle}.json. The REST form
+      is keyed by handle; the UCP tool accepts UCP catalog identifiers.
+  - tool: lookup_catalog
+    category: catalog
+    rest: [listCollectionProducts, getProduct]
+    binding: rest
+    confidence: medium
+    note: >-
+      Batch identifier lookup fans out across the two REST read operations. REST has no single batch
+      endpoint, so an agent replays getProduct per handle or pages listCollectionProducts.
+mcp_only:
+  - tool: create_cart
+    reason: >-
+      No public REST cart operation. The storefront AJAX cart (/cart.js) is explicitly Disallowed in
+      robots.txt with the instruction that agents should use UCP/MCP instead.
+  - tool: get_cart
+    reason: Same as create_cart — the /cart.js AJAX surface is agent-disallowed.
+  - tool: update_cart
+    reason: Same as create_cart — the /cart.js AJAX surface is agent-disallowed.
+  - tool: cancel_cart
+    reason: Same as create_cart. Requires an Idempotency-Key.
+  - tool: create_checkout
+    reason: Checkout has no public REST surface; /checkout and /checkouts/ are Disallowed in robots.txt.
+  - tool: get_checkout
+    reason: Checkout has no public REST surface.
+  - tool: update_checkout
+    reason: >-
+      Shipping address and method selection exist only over UCP; the fulfillment capability
+      (dev.ucp.shopping.fulfillment) is MCP-negotiated and single-destination for this merchant.
+  - tool: complete_checkout
+    reason: >-
+      Payment placement. Requires an Idempotency-Key AND contemporaneous human buyer approval. The
+      provider's robots.txt forbids any scripted or browser-automated path to this capability, so a REST
+      equivalent is not merely absent but deliberately withheld.
+  - tool: cancel_checkout
+    reason: Checkout has no public REST surface. Requires an Idempotency-Key.
+  - tool: get_order
+    reason: >-
+      /orders is Disallowed in robots.txt. Order retrieval is customer-scoped and rides the Shopify
+      customer account OIDC provider (scope customer-account-mcp-api:full).
+rest_only:
+  - operations: [getSitemap, getAgentInstructions, getLlmsTxt, getUcpProfile]
+    capability: discovery
+    reason: >-
+      Store-level discovery documents. They are how an agent finds the MCP surface in the first place,
+      so by construction they have no tool equivalent inside it.
+coverage:
+  tools_named: 13
+  tools_bound_to_rest: 3
+  mcp_only: 10
+  rest_operations_total: 7
+  rest_operations_with_a_tool: 3
+  rest_only: 4
+divergence_note: >-
+  This is the cleanest example in the catalog of an intentional read/write split across surfaces: the
+  provider publishes an anonymous read projection for crawlers and research agents, and confines every
+  state-changing and money-moving capability to an identity-gated, idempotency-keyed, human-approval-gated
+  MCP transport. Neither surface is a superset of the other.

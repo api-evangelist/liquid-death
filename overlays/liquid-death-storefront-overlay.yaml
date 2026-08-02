@@ -1,0 +1,77 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Liquid Death Storefront Read-Only JSON API
+  version: 1.0.0
+extends: openapi/liquid-death-storefront-openapi.yml
+x-generated: '2026-08-01'
+x-method: generated
+x-source: >-
+  Captures API Evangelist's enrichment of the Liquid Death storefront surface without mutating the
+  generated OpenAPI. Everything asserted here is grounded in the provider's own /agents.md, robots.txt
+  and /.well-known/ucp documents, or in a live probe recorded in this repo.
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-slug: liquid-death
+      x-apievangelist-surface: read-only
+      x-apievangelist-agent-instructions: https://liquiddeath.com/agents.md
+      x-apievangelist-companion-surface: mcp/liquid-death-mcp.yml
+      x-apievangelist-note: >-
+        This is one of two projections of the same commerce core. Every write, cart, checkout and order
+        capability lives exclusively on the UCP MCP transport; see mcp/liquid-death-tool-crosswalk.yml.
+
+  - target: $.info
+    update:
+      x-agentic-policy:
+        anonymous_read: allowed
+        scripted_checkout: forbidden
+        human_approval_required_for: [payment, checkout completion, order placement]
+        disallowed_agent_paths:
+          - /cart.js
+          - /recommendations/products
+          - /checkout
+          - /checkouts/
+          - /orders
+          - /account
+        preferred_transactional_surface: https://liquiddeath.myshopify.com/api/ucp/mcp
+        source: https://liquiddeath.com/robots.txt
+
+  - target: $
+    update:
+      x-rate-limits:
+        storefront_json:
+          documented: false
+        mcp:
+          scope: per-ip
+          signal: 429
+          guidance: Back off on 429 responses.
+          source: https://liquiddeath.com/agents.md
+
+  - target: $
+    update:
+      x-conventions: conventions/liquid-death-conventions.yml
+      x-error-catalog: errors/liquid-death-problem-types.yml
+      x-authentication: authentication/liquid-death-authentication.yml
+      x-data-model: data-model/liquid-death-data-model.yml
+      x-conformance: conformance/liquid-death-conformance.yml
+
+  - target: $.paths['/search'].get
+    update:
+      x-agent-guidance: >-
+        Returns HTML, not JSON. Agents needing structured search results should call the UCP MCP tool
+        search_catalog instead — the provider states this explicitly in /agents.md.
+      x-preferred-alternative: mcp://search_catalog
+
+  - target: $.paths['/collections/{handle}/products.json'].get
+    update:
+      x-pagination:
+        style: offset
+        params: [limit, page]
+        cursor: false
+        total_count: false
+        verified: '2026-08-01'
+
+  - target: $.paths['/products/{handle}.json'].get
+    update:
+      x-verified: '2026-08-01'
+      x-example-handle: sparkling-energy-vp2
