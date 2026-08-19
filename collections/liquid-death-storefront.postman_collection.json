@@ -1,0 +1,701 @@
+{
+  "item": [
+    {
+      "id": "c2674d30-296c-4d7a-b39a-0c53b498890d",
+      "name": "Catalog",
+      "description": {
+        "content": "Product and collection data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6b96b637-3645-43d9-a40e-16bf868b1885",
+          "name": "Get a product by handle",
+          "request": {
+            "name": "Get a product by handle",
+            "description": {
+              "content": "Returns the full product record for a single product handle, including variants, options and\nimages. Documented under \"Read-Only Browsing\" in https://liquiddeath.com/agents.md as\n`GET /products/{handle}.json`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "products",
+                "{{handle}}.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8764d5d9-993d-441f-a793-63c9dd37dd45",
+              "name": "The product record.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    "{{handle}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"product\": {\n    \"id\": 1091,\n    \"title\": \"string\",\n    \"handle\": \"string\",\n    \"body_html\": \"string\",\n    \"published_at\": \"1972-04-29T00:07:39.170Z\",\n    \"created_at\": \"1988-04-18T10:32:49.843Z\",\n    \"updated_at\": \"2012-11-10T15:07:22.550Z\",\n    \"vendor\": \"string\",\n    \"product_type\": \"string\",\n    \"template_suffix\": \"string\",\n    \"published_scope\": \"string\",\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"variants\": [\n      {\n        \"id\": 5066,\n        \"product_id\": 9348,\n        \"title\": \"string\",\n        \"sku\": \"string\",\n        \"barcode\": \"string\",\n        \"price\": \"string\",\n        \"price_currency\": \"string\",\n        \"compare_at_price\": \"string\",\n        \"compare_at_price_currency\": \"string\",\n        \"position\": 6644,\n        \"option1\": \"string\",\n        \"option2\": \"string\",\n        \"option3\": \"string\",\n        \"grams\": 445,\n        \"weight\": 4110.234753497257,\n        \"weight_unit\": \"string\",\n        \"taxable\": false,\n        \"tax_code\": \"string\",\n        \"requires_shipping\": false,\n        \"fulfillment_service\": \"string\",\n        \"inventory_management\": \"string\",\n        \"image_id\": 7330,\n        \"quantity_rule\": {},\n        \"created_at\": \"2022-08-01T12:47:05.889Z\",\n        \"updated_at\": \"1985-07-28T10:42:49.692Z\"\n      },\n      {\n        \"id\": 9442,\n        \"product_id\": 363,\n        \"title\": \"string\",\n        \"sku\": \"string\",\n        \"barcode\": \"string\",\n        \"price\": \"string\",\n        \"price_currency\": \"string\",\n        \"compare_at_price\": \"string\",\n        \"compare_at_price_currency\": \"string\",\n        \"position\": 8140,\n        \"option1\": \"string\",\n        \"option2\": \"string\",\n        \"option3\": \"string\",\n        \"grams\": 4149,\n        \"weight\": 2524.58841914728,\n        \"weight_unit\": \"string\",\n        \"taxable\": true,\n        \"tax_code\": \"string\",\n        \"requires_shipping\": true,\n        \"fulfillment_service\": \"string\",\n        \"inventory_management\": \"string\",\n        \"image_id\": 9002,\n        \"quantity_rule\": {},\n        \"created_at\": \"1947-09-07T07:13:57.906Z\",\n        \"updated_at\": \"1960-02-02T19:27:28.002Z\"\n      }\n    ],\n    \"images\": [\n      {\n        \"id\": 8046,\n        \"product_id\": 9668,\n        \"src\": \"http://QuTtEtMJVTjSYIeBkTKmIAueax.gblA,oSv5ybQYa4\",\n        \"alt\": \"string\",\n        \"width\": 5945,\n        \"height\": 3497,\n        \"position\": 9015,\n        \"variant_ids\": [\n          5999,\n          6306\n        ],\n        \"created_at\": \"1963-04-07T18:16:53.900Z\",\n        \"updated_at\": \"1998-04-13T01:19:39.575Z\"\n      },\n      {\n        \"id\": 8026,\n        \"product_id\": 1171,\n        \"src\": \"http://pSprdFrnXc.qejup4dlv\",\n        \"alt\": \"string\",\n        \"width\": 2380,\n        \"height\": 4234,\n        \"position\": 3231,\n        \"variant_ids\": [\n          4246,\n          6352\n        ],\n        \"created_at\": \"1950-05-05T13:11:19.709Z\",\n        \"updated_at\": \"1983-10-02T07:46:54.870Z\"\n      }\n    ],\n    \"image\": {\n      \"id\": 9293,\n      \"product_id\": 1203,\n      \"src\": \"http://xwLwx.yuGhN6a7iJxX46e0IsQ-FZh4Nh6\",\n      \"alt\": \"string\",\n      \"width\": 1718,\n      \"height\": 7110,\n      \"position\": 3567,\n      \"variant_ids\": [\n        3985,\n        5328\n      ],\n      \"created_at\": \"1948-06-15T04:44:07.030Z\",\n      \"updated_at\": \"2019-12-17T11:39:45.408Z\"\n    },\n    \"options\": [\n      {\n        \"name\": \"string\",\n        \"position\": 5674,\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"name\": \"string\",\n        \"position\": 8010,\n        \"values\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c47a505-e56e-4e16-aa44-55ef9084eb8f",
+              "name": "No product exists with that handle.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "products",
+                    "{{handle}}.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e778381c-9fd4-4e45-9e89-c6c3f0bd901c",
+          "name": "List products in a collection",
+          "request": {
+            "name": "List products in a collection",
+            "description": {
+              "content": "Returns the products in a collection. The special handle `all` returns the entire catalog.\nDocumented in https://liquiddeath.com/agents.md as `GET /collections/{handle}/products.json`\nand `GET /collections/all`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "collections",
+                ":handle",
+                "products.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of products to return in one page."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "1-indexed page number, used with `limit` for offset pagination."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "handle",
+                  "description": "(Required) Collection handle, e.g. `water`, `merch-store`, or `all` for the whole catalog."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "454e9fcb-c16a-450e-a3d7-9b3c562e1a3a",
+              "name": "A page of products in the collection.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":handle",
+                    "products.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "handle",
+                      "description": "(Required) Collection handle, e.g. `water`, `merch-store`, or `all` for the whole catalog."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"products\": [\n    {\n      \"id\": 2425,\n      \"title\": \"string\",\n      \"handle\": \"string\",\n      \"body_html\": \"string\",\n      \"published_at\": \"1947-04-28T09:52:19.029Z\",\n      \"created_at\": \"2013-04-08T12:13:45.741Z\",\n      \"updated_at\": \"1976-04-02T17:05:36.620Z\",\n      \"vendor\": \"string\",\n      \"product_type\": \"string\",\n      \"template_suffix\": \"string\",\n      \"published_scope\": \"string\",\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"variants\": [\n        {\n          \"id\": 6636,\n          \"product_id\": 7847,\n          \"title\": \"string\",\n          \"sku\": \"string\",\n          \"barcode\": \"string\",\n          \"price\": \"string\",\n          \"price_currency\": \"string\",\n          \"compare_at_price\": \"string\",\n          \"compare_at_price_currency\": \"string\",\n          \"position\": 5779,\n          \"option1\": \"string\",\n          \"option2\": \"string\",\n          \"option3\": \"string\",\n          \"grams\": 4867,\n          \"weight\": 9349.201432354066,\n          \"weight_unit\": \"string\",\n          \"taxable\": false,\n          \"tax_code\": \"string\",\n          \"requires_shipping\": false,\n          \"fulfillment_service\": \"string\",\n          \"inventory_management\": \"string\",\n          \"image_id\": 5318,\n          \"quantity_rule\": {},\n          \"created_at\": \"1973-08-30T00:59:09.239Z\",\n          \"updated_at\": \"2016-08-15T15:33:52.353Z\"\n        },\n        {\n          \"id\": 9397,\n          \"product_id\": 2653,\n          \"title\": \"string\",\n          \"sku\": \"string\",\n          \"barcode\": \"string\",\n          \"price\": \"string\",\n          \"price_currency\": \"string\",\n          \"compare_at_price\": \"string\",\n          \"compare_at_price_currency\": \"string\",\n          \"position\": 876,\n          \"option1\": \"string\",\n          \"option2\": \"string\",\n          \"option3\": \"string\",\n          \"grams\": 2674,\n          \"weight\": 8715.485175254647,\n          \"weight_unit\": \"string\",\n          \"taxable\": false,\n          \"tax_code\": \"string\",\n          \"requires_shipping\": false,\n          \"fulfillment_service\": \"string\",\n          \"inventory_management\": \"string\",\n          \"image_id\": 9038,\n          \"quantity_rule\": {},\n          \"created_at\": \"2022-11-17T06:05:05.826Z\",\n          \"updated_at\": \"1984-04-21T08:22:00.838Z\"\n        }\n      ],\n      \"images\": [\n        {\n          \"id\": 5412,\n          \"product_id\": 2536,\n          \"src\": \"https://RzQJJxevHDlLHKqxcISqc.iifm.PCSX44pzugRNBjnb1asCoxtUSV-2fJZzUJQnShDPLQc8uXCdtkwWIOLxnqUQEVZxz\",\n          \"alt\": \"string\",\n          \"width\": 9422,\n          \"height\": 1120,\n          \"position\": 9728,\n          \"variant_ids\": [\n            2320,\n            9267\n          ],\n          \"created_at\": \"2024-06-26T05:53:14.796Z\",\n          \"updated_at\": \"2008-06-15T18:48:39.048Z\"\n        },\n        {\n          \"id\": 773,\n          \"product_id\": 9272,\n          \"src\": \"http://R.ibyfBD32LaIoLC\",\n          \"alt\": \"string\",\n          \"width\": 6548,\n          \"height\": 1904,\n          \"position\": 6424,\n          \"variant_ids\": [\n            6463,\n            5420\n          ],\n          \"created_at\": \"2000-05-07T15:14:45.231Z\",\n          \"updated_at\": \"2014-12-11T00:56:31.744Z\"\n        }\n      ],\n      \"image\": {\n        \"id\": 1035,\n        \"product_id\": 6622,\n        \"src\": \"http://BtlJCSJsvPnL.saDO2vxxDQ2EoVik+Jp\",\n        \"alt\": \"string\",\n        \"width\": 1357,\n        \"height\": 131,\n        \"position\": 5407,\n        \"variant_ids\": [\n          1306,\n          700\n        ],\n        \"created_at\": \"2010-09-24T17:16:21.785Z\",\n        \"updated_at\": \"1954-06-11T08:18:03.409Z\"\n      },\n      \"options\": [\n        {\n          \"name\": \"string\",\n          \"position\": 6194,\n          \"values\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"name\": \"string\",\n          \"position\": 3188,\n          \"values\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ]\n    },\n    {\n      \"id\": 6065,\n      \"title\": \"string\",\n      \"handle\": \"string\",\n      \"body_html\": \"string\",\n      \"published_at\": \"1971-03-07T20:27:50.723Z\",\n      \"created_at\": \"2011-04-28T23:23:41.543Z\",\n      \"updated_at\": \"1960-03-24T11:55:53.291Z\",\n      \"vendor\": \"string\",\n      \"product_type\": \"string\",\n      \"template_suffix\": \"string\",\n      \"published_scope\": \"string\",\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"variants\": [\n        {\n          \"id\": 619,\n          \"product_id\": 4109,\n          \"title\": \"string\",\n          \"sku\": \"string\",\n          \"barcode\": \"string\",\n          \"price\": \"string\",\n          \"price_currency\": \"string\",\n          \"compare_at_price\": \"string\",\n          \"compare_at_price_currency\": \"string\",\n          \"position\": 6509,\n          \"option1\": \"string\",\n          \"option2\": \"string\",\n          \"option3\": \"string\",\n          \"grams\": 4139,\n          \"weight\": 572.333432596397,\n          \"weight_unit\": \"string\",\n          \"taxable\": false,\n          \"tax_code\": \"string\",\n          \"requires_shipping\": true,\n          \"fulfillment_service\": \"string\",\n          \"inventory_management\": \"string\",\n          \"image_id\": 4638,\n          \"quantity_rule\": {},\n          \"created_at\": \"1964-07-29T04:37:20.303Z\",\n          \"updated_at\": \"1958-09-29T23:41:43.589Z\"\n        },\n        {\n          \"id\": 7450,\n          \"product_id\": 6461,\n          \"title\": \"string\",\n          \"sku\": \"string\",\n          \"barcode\": \"string\",\n          \"price\": \"string\",\n          \"price_currency\": \"string\",\n          \"compare_at_price\": \"string\",\n          \"compare_at_price_currency\": \"string\",\n          \"position\": 643,\n          \"option1\": \"string\",\n          \"option2\": \"string\",\n          \"option3\": \"string\",\n          \"grams\": 6741,\n          \"weight\": 6011.3730130650365,\n          \"weight_unit\": \"string\",\n          \"taxable\": false,\n          \"tax_code\": \"string\",\n          \"requires_shipping\": true,\n          \"fulfillment_service\": \"string\",\n          \"inventory_management\": \"string\",\n          \"image_id\": 9191,\n          \"quantity_rule\": {},\n          \"created_at\": \"2021-02-01T10:38:35.013Z\",\n          \"updated_at\": \"2010-10-14T07:36:59.983Z\"\n        }\n      ],\n      \"images\": [\n        {\n          \"id\": 3394,\n          \"product_id\": 9070,\n          \"src\": \"http://NohHPl.rzRvwPq4DHDsgNiCl8LooTGBheOXr\",\n          \"alt\": \"string\",\n          \"width\": 7926,\n          \"height\": 1495,\n          \"position\": 9997,\n          \"variant_ids\": [\n            7202,\n            1878\n          ],\n          \"created_at\": \"1951-12-24T18:05:58.073Z\",\n          \"updated_at\": \"2005-06-22T01:58:16.047Z\"\n        },\n        {\n          \"id\": 2094,\n          \"product_id\": 7078,\n          \"src\": \"http://aYDPkVFMySFHBS.lrdkgvvkieRJoSMMq5uxBH.JoqE-oTX3pL04u\",\n          \"alt\": \"string\",\n          \"width\": 9518,\n          \"height\": 6570,\n          \"position\": 8623,\n          \"variant_ids\": [\n            3102,\n            9902\n          ],\n          \"created_at\": \"2020-07-12T19:10:05.044Z\",\n          \"updated_at\": \"2012-01-29T18:44:17.036Z\"\n        }\n      ],\n      \"image\": {\n        \"id\": 4228,\n        \"product_id\": 3681,\n        \"src\": \"http://Mxn.nprvOLgVfYbESzDLjwh9TQN6jzyW\",\n        \"alt\": \"string\",\n        \"width\": 7815,\n        \"height\": 6444,\n        \"position\": 8746,\n        \"variant_ids\": [\n          4408,\n          9929\n        ],\n        \"created_at\": \"1973-04-26T11:38:00.586Z\",\n        \"updated_at\": \"2011-01-03T03:01:13.191Z\"\n      },\n      \"options\": [\n        {\n          \"name\": \"string\",\n          \"position\": 476,\n          \"values\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"name\": \"string\",\n          \"position\": 7021,\n          \"values\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "02399c42-793a-4301-9e29-247ce295db88",
+              "name": "No collection exists with that handle.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "collections",
+                    ":handle",
+                    "products.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "handle",
+                      "description": "(Required) Collection handle, e.g. `water`, `merch-store`, or `all` for the whole catalog."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2f6cb2e7-4efa-44a5-b560-cdc84aef7fd1",
+          "name": "Search the storefront",
+          "request": {
+            "name": "Search the storefront",
+            "description": {
+              "content": "Full-text storefront search. Documented in https://liquiddeath.com/agents.md as\n`GET /search?q={query}&type=product`. Returns a rendered HTML results page — the store does not\npublish a JSON projection of search. Agents needing structured search results are directed by\nthe provider to the UCP `search_catalog` MCP tool instead.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "(Required) The search query."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Restricts the resource types searched."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/html"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c660ad08-3b3e-4c89-874f-af4062244526",
+              "name": "An HTML search results page.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "water"
+                    },
+                    {
+                      "key": "type",
+                      "value": "product"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/html"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/html"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "1d547347-83f7-41e6-b3a3-e2a47a8b759d",
+      "name": "Discovery",
+      "description": {
+        "content": "Store-level discovery documents for crawlers and agents",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9b361107-0489-4c09-ad82-445f4de72862",
+          "name": "Get the sitemap index",
+          "request": {
+            "name": "Get the sitemap index",
+            "description": {
+              "content": "The sitemap index, linking per-locale product, collection, page and blog sitemaps, plus\n`sitemap_agentic_discovery.xml` which points crawlers at `/agents.md`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sitemap.xml"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8f7046ab-e70e-4e71-bf6f-9bf0249fb1aa",
+              "name": "A sitemaps.org sitemap index document.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sitemap.xml"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/xml"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/xml"
+                }
+              ],
+              "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<element>(string)</element>",
+              "cookie": [],
+              "_postman_previewlanguage": "xml"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "50ab0cb1-cbfa-4339-bfb4-592f7dd54a70",
+          "name": "Get the agent instruction document",
+          "request": {
+            "name": "Get the agent instruction document",
+            "description": {
+              "content": "The canonical agent-facing description of the store: UCP endpoints, supported UCP versions,\nthe read-only browsing surface, the buyer-approval rule, and store policies. Mirrored verbatim\nat `/llms.txt`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "agents.md"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/markdown"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ef1ea93e-bb45-462c-90c5-aa0cd71c161e",
+              "name": "The agent instruction document in Markdown.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agents.md"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/markdown"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/markdown"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "10687ff7-828c-4f8b-8434-72582d8eeb1c",
+          "name": "Get the llms.txt document",
+          "request": {
+            "name": "Get the llms.txt document",
+            "description": {
+              "content": "A mirror of `/agents.md` served at the llms.txt convention path.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "llms.txt"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2fc46ec4-1926-4d1a-801a-58aa263b9758",
+              "name": "The llms.txt document.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "llms.txt"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8ae4e2b4-967e-40f6-a69a-07a4ccab1be4",
+          "name": "Get the UCP merchant profile",
+          "request": {
+            "name": "Get the UCP merchant profile",
+            "description": {
+              "content": "The Universal Commerce Protocol merchant discovery profile: supported protocol versions,\nservice endpoints (including the MCP transport endpoint), negotiated capabilities, and the\nconfigured payment handlers. Anonymous.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ".well-known",
+                "ucp"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3be36ac0-d9ff-4e3a-afc4-7777957a26b2",
+              "name": "The UCP merchant profile.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ".well-known",
+                    "ucp"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"ucp\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://liquiddeath.com",
+      "key": "baseUrl"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) The product handle (URL slug), e.g. `sparkling-energy-vp2`.",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<string>",
+      "key": "handle"
+    }
+  ],
+  "info": {
+    "_postman_id": "f1f28183-ea9b-4e0f-bca4-cb9696aaa21a",
+    "name": "Liquid Death Storefront Read-Only JSON API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Liquid Death runs its direct-to-consumer store at https://liquiddeath.com on Shopify. The store\npublishes an agent-facing instruction document at `/agents.md` (mirrored at `/llms.txt`) that\nexplicitly documents a **read-only browsing** surface for \"agents that only need to read store data\nwithout transacting\". No authentication is required for any operation in this document.\n\nThis OpenAPI was GENERATED by the API Evangelist enrichment pipeline from the endpoints Liquid Death\ndocuments in `/agents.md`, and every operation below was probed live on 2026-08-01 and confirmed to\nreturn the recorded status and content type. Schemas were derived from observed response bodies.\nNothing here is invented: no operation appears that was not both documented by the provider and\nverified against the live host.\n\nTransactional operations (cart, checkout, order) are **not** in this document. Liquid Death exposes\nthose over the Universal Commerce Protocol (UCP) MCP endpoint — see `mcp/liquid-death-mcp.yml` and\n`mcp/liquid-death-ucp-shopping-mcp.openrpc.json`. The provider's robots.txt explicitly directs agents\nto UCP/MCP for catalog, cart and checkout, and disallows scripted checkout completion.\n\n\nContact Support:\n Name: Liquid Death",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Liquid Death Storefront Read-Only JSON API",
+    "version": "2026-08-01"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Catalog",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a product by handle",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://liquiddeath.com/products/:handle.json",
+            "params": [
+              {
+                "name": "handle",
+                "value": "sparkling-energy-vp2",
+                "type": "path",
+                "description": "The product handle (URL slug), e.g. `sparkling-energy-vp2`."
+              }
+            ]
+          },
+          "docs": "Returns the full product record for a single product handle, including variants, options and\nimages. Documented under \"Read-Only Browsing\" in https://liquiddeath.com/agents.md as\n`GET /products/{handle}.json`.\n"
+        },
+        {
+          "info": {
+            "name": "List products in a collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://liquiddeath.com/collections/:handle/products.json",
+            "params": [
+              {
+                "name": "handle",
+                "value": "all",
+                "type": "path",
+                "description": "Collection handle, e.g. `water`, `merch-store`, or `all` for the whole catalog."
+              },
+              {
+                "name": "limit",
+                "value": "50",
+                "type": "query",
+                "description": "Maximum number of products to return in one page."
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "1-indexed page number, used with `limit` for offset pagination."
+              }
+            ]
+          },
+          "docs": "Returns the products in a collection. The special handle `all` returns the entire catalog.\nDocumented in https://liquiddeath.com/agents.md as `GET /collections/{handle}/products.json`\nand `GET /collections/all`.\n"
+        },
+        {
+          "info": {
+            "name": "Search the storefront",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://liquiddeath.com/search",
+            "params": [
+              {
+                "name": "q",
+                "value": "water",
+                "type": "query",
+                "description": "The search query."
+              },
+              {
+                "name": "type",
+                "value": "product",
+                "type": "query",
+                "description": "Restricts the resource types searched."
+              }
+            ]
+          },
+          "docs": "Full-text storefront search. Documented in https://liquiddeath.com/agents.md as\n`GET /search?q={query}&type=product`. Returns a rendered HTML results page — the store does not\npublish a JSON projection of search. Agents needing structured search results are directed by\nthe provider to the UCP `search_catalog` MCP tool instead.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Discovery",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the sitemap index",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://liquiddeath.com/sitemap.xml"
+          },
+          "docs": "The sitemap index, linking per-locale product, collection, page and blog sitemaps, plus\n`sitemap_agentic_discovery.xml` which points crawlers at `/agents.md`.\n"
+        },
+        {
+          "info": {
+            "name": "Get the agent instruction document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://liquiddeath.com/agents.md"
+          },
+          "docs": "The canonical agent-facing description of the store: UCP endpoints, supported UCP versions,\nthe read-only browsing surface, the buyer-approval rule, and store policies. Mirrored verbatim\nat `/llms.txt`.\n"
+        },
+        {
+          "info": {
+            "name": "Get the llms.txt document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://liquiddeath.com/llms.txt"
+          },
+          "docs": "A mirror of `/agents.md` served at the llms.txt convention path."
+        },
+        {
+          "info": {
+            "name": "Get the UCP merchant profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://liquiddeath.com/.well-known/ucp"
+          },
+          "docs": "The Universal Commerce Protocol merchant discovery profile: supported protocol versions,\nservice endpoints (including the MCP transport endpoint), negotiated capabilities, and the\nconfigured payment handlers. Anonymous.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
