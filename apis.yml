@@ -27,6 +27,17 @@ tags:
 - Beverages
 - Consumer Packaged Goods
 - Direct to Consumer
+- E-Commerce
+- Retail
+- Agentic Commerce
+- Universal Commerce Protocol
+- MCP
+- Shopify
+tags_raw:
+- Company
+- Beverages
+- Consumer Packaged Goods
+- Direct to Consumer
 - Ecommerce
 - Retail
 - Agentic Commerce
@@ -42,6 +53,11 @@ apis:
   humanURL: https://liquiddeath.com/agents.md
   baseURL: https://liquiddeath.com
   tags:
+  - E-Commerce
+  - Catalog
+  - Direct to Consumer
+  - Agentic Commerce
+  tags_raw:
   - Ecommerce
   - Catalog
   - Direct to Consumer
@@ -68,6 +84,11 @@ apis:
   - Agentic Commerce
   - MCP
   - Universal Commerce Protocol
+  - E-Commerce
+  tags_raw:
+  - Agentic Commerce
+  - MCP
+  - Universal Commerce Protocol
   - Ecommerce
   properties:
   - type: Documentation
@@ -87,6 +108,9 @@ apis:
   humanURL: https://liquiddeath.com/.well-known/openid-configuration
   baseURL: https://account.liquiddeath.com/authentication
   tags:
+  - Authentication
+  - OpenID Connect
+  tags_raw:
   - Authentication
   - OpenID Connect
   - OAuth
