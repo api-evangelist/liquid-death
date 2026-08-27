@@ -45,39 +45,13 @@ tags_raw:
 - MCP
 - Shopify
 apis:
-- name: Liquid Death Storefront Read-Only JSON API
-  description: >-
-    The anonymous, read-only product and collection JSON surface Liquid Death documents for AI agents in
-    its agents.md, covering product records, collection listings, storefront search and the store-level
-    discovery documents. No authentication required. Contains no transactional capability by design.
-  humanURL: https://liquiddeath.com/agents.md
-  baseURL: https://liquiddeath.com
-  tags:
-  - E-Commerce
-  - Catalog
-  - Direct to Consumer
-  - Agentic Commerce
-  tags_raw:
-  - Ecommerce
-  - Catalog
-  - Direct to Consumer
-  - Agentic Commerce
-  properties:
-  - type: Documentation
-    url: https://liquiddeath.com/agents.md
-  - type: OpenAPI
-    url: openapi/liquid-death-storefront-openapi.yml
-  - type: Overlay
-    url: overlays/liquid-death-storefront-overlay.yaml
-  - type: AgenticAccess
-    url: agentic-access/liquid-death-agentic-access.yml
 - name: Liquid Death UCP Shopping MCP
   description: >-
-    Liquid Death's hosted Model Context Protocol server implementing the Universal Commerce Protocol
-    dev.ucp.shopping service — catalog search and lookup, cart, checkout, fulfillment, discount and
-    order. Advertised in robots.txt, agents.md and the /.well-known/ucp merchant profile. Requires a
-    resolvable UCP agent profile, mandates an Idempotency-Key on complete_checkout, cancel_checkout and
-    cancel_cart, and forbids completing payment without explicit buyer approval.
+    Liquid Death's hosted Model Context Protocol server implementing the Universal Commerce Protocol dev.ucp.shopping
+    service — catalog search and lookup, cart, checkout, fulfillment, discount and order. Advertised in
+    robots.txt, agents.md and the /.well-known/ucp merchant profile. Requires a resolvable UCP agent profile,
+    mandates an Idempotency-Key on complete_checkout, cancel_checkout and cancel_cart, and forbids completing
+    payment without explicit buyer approval.
   humanURL: https://liquiddeath.com/agents.md
   baseURL: https://liquiddeath.myshopify.com/api/ucp/mcp
   tags:
@@ -102,9 +76,9 @@ apis:
 - name: Liquid Death Customer Account OAuth
   description: >-
     The OpenID Connect and OAuth 2.0 authorization server for the Liquid Death customer account, hosted
-    at account.liquiddeath.com and discoverable from both /.well-known/openid-configuration and
-    /.well-known/oauth-authorization-server. Authorization code flow with PKCE (S256); advertises the
-    customer-account-api:full and customer-account-mcp-api:full scopes.
+    at account.liquiddeath.com and discoverable from both /.well-known/openid-configuration and /.well-known/oauth-authorization-server.
+    Authorization code flow with PKCE (S256); advertises the customer-account-api:full and customer-account-mcp-api:full
+    scopes.
   humanURL: https://liquiddeath.com/.well-known/openid-configuration
   baseURL: https://account.liquiddeath.com/authentication
   tags:
@@ -119,6 +93,34 @@ apis:
     url: well-known/liquid-death-openid-configuration.json
   - type: OAuthScopes
     url: scopes/liquid-death-scopes.yml
+- aid: liquid-death:liquid-death-catalog-api
+  name: Liquid Death Catalog API
+  description: Product and collection data
+  humanURL: https://liquiddeath.com/agents.md
+  baseURL: https://liquiddeath.com
+  tags:
+  - Catalog
+  properties:
+  - type: OpenAPI
+    url: openapi/liquid-death-catalog-api-openapi.yml
+  - type: Documentation
+    url: https://liquiddeath.com/agents.md
+  - type: AgenticAccess
+    url: agentic-access/liquid-death-agentic-access.yml
+- aid: liquid-death:liquid-death-discovery-api
+  name: Liquid Death Discovery API
+  description: Store-level discovery documents for crawlers and agents
+  humanURL: https://liquiddeath.com/agents.md
+  baseURL: https://liquiddeath.com
+  tags:
+  - Discovery
+  properties:
+  - type: OpenAPI
+    url: openapi/liquid-death-discovery-api-openapi.yml
+  - type: Documentation
+    url: https://liquiddeath.com/agents.md
+  - type: AgenticAccess
+    url: agentic-access/liquid-death-agentic-access.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
