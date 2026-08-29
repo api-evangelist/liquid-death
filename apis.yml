@@ -13,6 +13,18 @@ description: >-
   storefront exposes an anonymous read-only product and collection JSON surface, while every cart,
   checkout and order capability is confined to the identity-gated, idempotency-keyed MCP transport that
   requires contemporaneous human approval before payment.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://liquiddeath.com/cdn/shop/files/Liquid-Death-Preview-Image_7033558e-a84d-4880-8a70-87e84739f262.jpg?v=1681949476
 url: https://raw.githubusercontent.com/api-evangelist/liquid-death/refs/heads/main/apis.yml
 x-type: company
