@@ -1,18 +1,17 @@
 aid: liquid-death
 name: Liquid Death
-description: >-
-  Liquid Death is a Los Angeles beverage company founded in 2014 by Mike Cessario, Pat Cook and JonRyan
-  Riggins, selling still and sparkling mountain water, iced tea, flavored sparkling water, the Death Dust
-  electrolyte powder and a Sparkling Energy line, all in recyclable aluminum tallboys and marketed through
-  a deliberately horror-comedy brand voice. It has raised roughly $264M and was valued at $1.4B in its 2024
-  Series F. Liquid Death publishes no conventional developer portal, yet it is one of the more
-  agent-forward direct-to-consumer storefronts in the catalog: liquiddeath.com serves a first-party
+description: 'Liquid Death is a Los Angeles beverage company founded in 2014 by Mike Cessario, Pat Cook
+  and JonRyan Riggins, selling still and sparkling mountain water, iced tea, flavored sparkling water,
+  the Death Dust electrolyte powder and a Sparkling Energy line, all in recyclable aluminum tallboys and
+  marketed through a deliberately horror-comedy brand voice. It has raised roughly $264M and was valued
+  at $1.4B in its 2024 Series F. Liquid Death publishes no conventional developer portal, yet it is one
+  of the more agent-forward direct-to-consumer storefronts in the catalog: liquiddeath.com serves a first-party
   agents.md (mirrored at /llms.txt), a dedicated agentic-discovery sitemap, an agent policy block inside
-  robots.txt, a Universal Commerce Protocol merchant profile at /.well-known/ucp, a live UCP shopping MCP
-  endpoint, and both OpenID Connect and RFC 8414 OAuth discovery documents for its customer account. The
-  storefront exposes an anonymous read-only product and collection JSON surface, while every cart,
+  robots.txt, a Universal Commerce Protocol merchant profile at /.well-known/ucp, a live UCP shopping
+  MCP endpoint, and both OpenID Connect and RFC 8414 OAuth discovery documents for its customer account.
+  The storefront exposes an anonymous read-only product and collection JSON surface, while every cart,
   checkout and order capability is confined to the identity-gated, idempotency-keyed MCP transport that
-  requires contemporaneous human approval before payment.
+  requires contemporaneous human approval before payment.'
 deliveryModel:
   model: saas
   open_source: false
@@ -47,7 +46,7 @@ x-tier: profiled
 x-tier-reason: harvest
 specificationVersion: '0.23'
 created: '2026-08-01'
-modified: '2026-08-01'
+modified: '2026-09-16'
 tags:
 - Company
 - Beverages
@@ -72,12 +71,11 @@ tags_raw:
 - Shopify
 apis:
 - name: Liquid Death UCP Shopping MCP
-  description: >-
-    Liquid Death's hosted Model Context Protocol server implementing the Universal Commerce Protocol dev.ucp.shopping
-    service — catalog search and lookup, cart, checkout, fulfillment, discount and order. Advertised in
-    robots.txt, agents.md and the /.well-known/ucp merchant profile. Requires a resolvable UCP agent profile,
-    mandates an Idempotency-Key on complete_checkout, cancel_checkout and cancel_cart, and forbids completing
-    payment without explicit buyer approval.
+  description: Liquid Death's hosted Model Context Protocol server implementing the Universal Commerce
+    Protocol dev.ucp.shopping service — catalog search and lookup, cart, checkout, fulfillment, discount
+    and order. Advertised in robots.txt, agents.md and the /.well-known/ucp merchant profile. Requires
+    a resolvable UCP agent profile, mandates an Idempotency-Key on complete_checkout, cancel_checkout
+    and cancel_cart, and forbids completing payment without explicit buyer approval.
   humanURL: https://liquiddeath.com/agents.md
   baseURL: https://liquiddeath.myshopify.com/api/ucp/mcp
   tags:
@@ -100,11 +98,10 @@ apis:
   - type: OpenRPC
     url: mcp/liquid-death-ucp-shopping-mcp.openrpc.json
 - name: Liquid Death Customer Account OAuth
-  description: >-
-    The OpenID Connect and OAuth 2.0 authorization server for the Liquid Death customer account, hosted
-    at account.liquiddeath.com and discoverable from both /.well-known/openid-configuration and /.well-known/oauth-authorization-server.
-    Authorization code flow with PKCE (S256); advertises the customer-account-api:full and customer-account-mcp-api:full
-    scopes.
+  description: The OpenID Connect and OAuth 2.0 authorization server for the Liquid Death customer account,
+    hosted at account.liquiddeath.com and discoverable from both /.well-known/openid-configuration and
+    /.well-known/oauth-authorization-server. Authorization code flow with PKCE (S256); advertises the
+    customer-account-api:full and customer-account-mcp-api:full scopes.
   humanURL: https://liquiddeath.com/.well-known/openid-configuration
   baseURL: https://account.liquiddeath.com/authentication
   tags:
@@ -167,7 +164,7 @@ common:
 - type: WellKnown
   url: well-known/liquid-death-well-known.yml
 - type: OpenAPI
-  url: openapi/liquid-death-storefront-openapi.yml
+  url: openapi/_original/liquid-death-storefront-openapi.yml
 - type: Overlay
   url: overlays/liquid-death-storefront-overlay.yaml
 - type: MCPServer
