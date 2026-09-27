@@ -1,7 +1,8 @@
 {
   "provider": "liquid-death",
   "sources": [
-    "_original/liquid-death-storefront-openapi.yml"
+    "liquid-death-catalog-api-openapi.yml",
+    "liquid-death-discovery-api-openapi.yml"
   ],
   "outputs": [
     "liquid-death-catalog-api-openapi.yml",
@@ -9,14 +10,14 @@
   ],
   "archived": [],
   "errors": [],
-  "warnings": [],
-  "notes": [
-    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
-    "liquid-death-storefront-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
-    "apis.yml register: already-registered"
+  "warnings": [
+    "liquid-death-catalog-api-openapi.yml: previously refined output kept for 3 operation(s) no archived document covers (e.g. /collections/{handle}/products.json get, /products/{handle}.json get, /search get); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "liquid-death-discovery-api-openapi.yml: previously refined output kept for 4 operation(s) no archived document covers (e.g. /.well-known/ucp get, /agents.md get, /llms.txt get); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth."
   ],
-  "skipped": [
-    "liquid-death-catalog-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "liquid-death-discovery-api-openapi.yml: previously refined output, superseded by openapi/_original/"
-  ]
+  "notes": [
+    "liquid-death-storefront-openapi.yml: platform-generated surface (shopify/storefront-json), not split (roadmap#680)",
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "apis.yml register: written (+1 apis, 4 total)"
+  ],
+  "skipped": []
 }

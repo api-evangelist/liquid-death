@@ -71,11 +71,12 @@ tags_raw:
 - Shopify
 apis:
 - name: Liquid Death UCP Shopping MCP
-  description: Liquid Death's hosted Model Context Protocol server implementing the Universal Commerce
-    Protocol dev.ucp.shopping service — catalog search and lookup, cart, checkout, fulfillment, discount
-    and order. Advertised in robots.txt, agents.md and the /.well-known/ucp merchant profile. Requires
-    a resolvable UCP agent profile, mandates an Idempotency-Key on complete_checkout, cancel_checkout
-    and cancel_cart, and forbids completing payment without explicit buyer approval.
+  description: >-
+    Liquid Death's hosted Model Context Protocol server implementing the Universal Commerce Protocol dev.ucp.shopping
+    service — catalog search and lookup, cart, checkout, fulfillment, discount and order. Advertised in
+    robots.txt, agents.md and the /.well-known/ucp merchant profile. Requires a resolvable UCP agent profile,
+    mandates an Idempotency-Key on complete_checkout, cancel_checkout and cancel_cart, and forbids completing
+    payment without explicit buyer approval.
   humanURL: https://liquiddeath.com/agents.md
   baseURL: https://liquiddeath.myshopify.com/api/ucp/mcp
   tags:
@@ -97,11 +98,15 @@ apis:
     url: mcp/liquid-death-tool-crosswalk.yml
   - type: OpenRPC
     url: mcp/liquid-death-ucp-shopping-mcp.openrpc.json
+  x-surface: platform-generated
+  x-platform: shopify
+  x-platform-surface: ucp
 - name: Liquid Death Customer Account OAuth
-  description: The OpenID Connect and OAuth 2.0 authorization server for the Liquid Death customer account,
-    hosted at account.liquiddeath.com and discoverable from both /.well-known/openid-configuration and
-    /.well-known/oauth-authorization-server. Authorization code flow with PKCE (S256); advertises the
-    customer-account-api:full and customer-account-mcp-api:full scopes.
+  description: >-
+    The OpenID Connect and OAuth 2.0 authorization server for the Liquid Death customer account, hosted
+    at account.liquiddeath.com and discoverable from both /.well-known/openid-configuration and /.well-known/oauth-authorization-server.
+    Authorization code flow with PKCE (S256); advertises the customer-account-api:full and customer-account-mcp-api:full
+    scopes.
   humanURL: https://liquiddeath.com/.well-known/openid-configuration
   baseURL: https://account.liquiddeath.com/authentication
   tags:
@@ -116,25 +121,13 @@ apis:
     url: well-known/liquid-death-openid-configuration.json
   - type: OAuthScopes
     url: scopes/liquid-death-scopes.yml
-- aid: liquid-death:liquid-death-catalog-api
-  name: Liquid Death Catalog API
-  description: Product and collection data
-  humanURL: https://liquiddeath.com/agents.md
-  baseURL: https://liquiddeath.com
-  tags:
-  - Catalog
-  properties:
-  - type: OpenAPI
-    url: openapi/liquid-death-catalog-api-openapi.yml
-  - type: Documentation
-    url: https://liquiddeath.com/agents.md
-  - type: AgenticAccess
-    url: agentic-access/liquid-death-agentic-access.yml
+  x-surface: platform-generated
+  x-platform: shopify
+  x-platform-surface: customer-account
 - aid: liquid-death:liquid-death-discovery-api
   name: Liquid Death Discovery API
   description: Store-level discovery documents for crawlers and agents
   humanURL: https://liquiddeath.com/agents.md
-  baseURL: https://liquiddeath.com
   tags:
   - Discovery
   properties:
@@ -144,6 +137,21 @@ apis:
     url: https://liquiddeath.com/agents.md
   - type: AgenticAccess
     url: agentic-access/liquid-death-agentic-access.yml
+- aid: liquid-death:liquiddeath-com-shopify-storefront-json
+  name: Liquid Death Storefront JSON (Shopify)
+  description: >-
+    The Shopify Storefront JSON surface that Shopify generates for every Shopify site or store, served
+    on liquiddeath.com. Catalogued as one platform-generated record, not as separate APIs: nobody at Liquid
+    Death designed it.
+  baseURL: https://liquiddeath.com
+  tags:
+  - Shopify
+  x-surface: platform-generated
+  x-platform: shopify
+  x-platform-surface: storefront-json
+  properties:
+  - type: Documentation
+    url: https://liquiddeath.com
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
