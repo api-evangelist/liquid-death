@@ -17,7 +17,7 @@
   "notes": [
     "liquid-death-storefront-openapi.yml: platform-generated surface (shopify/storefront-json), not split (roadmap#680)",
     "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
-    "apis.yml register: written (+1 apis, 4 total)"
+    "apis.yml register: already-registered"
   ],
   "skipped": []
 }

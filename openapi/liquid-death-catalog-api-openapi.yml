@@ -234,51 +234,6 @@ components:
         updated_at:
           type: string
           format: date-time
-    Option:
-      type: object
-      description: A product option axis, e.g. Flavors or Size.
-      properties:
-        name:
-          type: string
-        position:
-          type: integer
-        values:
-          type: array
-          items:
-            type: string
-    Image:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        product_id:
-          type: integer
-          format: int64
-        src:
-          type: string
-          format: uri
-        alt:
-          type:
-          - string
-          - 'null'
-        width:
-          type: integer
-        height:
-          type: integer
-        position:
-          type: integer
-        variant_ids:
-          type: array
-          items:
-            type: integer
-            format: int64
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
     Product:
       type: object
       description: A storefront product, as returned by the read-only product JSON endpoints.
@@ -330,6 +285,51 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Option'
+    Option:
+      type: object
+      description: A product option axis, e.g. Flavors or Size.
+      properties:
+        name:
+          type: string
+        position:
+          type: integer
+        values:
+          type: array
+          items:
+            type: string
+    Image:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        product_id:
+          type: integer
+          format: int64
+        src:
+          type: string
+          format: uri
+        alt:
+          type:
+          - string
+          - 'null'
+        width:
+          type: integer
+        height:
+          type: integer
+        position:
+          type: integer
+        variant_ids:
+          type: array
+          items:
+            type: integer
+            format: int64
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
     Error:
       type: object
       description: Error body returned by the storefront JSON endpoints.
