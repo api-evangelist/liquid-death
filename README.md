@@ -64,53 +64,123 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Liquid Death is a Los Angeles beverage company (founded 2014; still and sparkling mountain water, iced
-tea, flavored sparkling water, Death Dust electrolyte powder, and a Sparkling Energy line) selling
-direct-to-consumer at [liquiddeath.com](https://liquiddeath.com/) alongside retail distribution.
+Liquid Death is a Los Angeles beverage company founded in 2014 by Mike Cessario, Pat Cook and JonRyan Riggins, selling still and sparkling mountain water, iced tea, flavored sparkling water, the Death Dust electrolyte powder and a Sparkling Energy line, all in recyclable aluminum tallboys and marketed through a deliberately horror-comedy brand voice. It has raised roughly $264M and was valued at $1.4B in its 2024 Series F. Liquid Death publishes no conventional developer portal, yet it is one of the more agent-forward direct-to-consumer storefronts in the catalog: liquiddeath.com serves a first-party agents.md (mirrored at /llms.txt), a dedicated agentic-discovery sitemap, an agent policy block inside robots.txt, a Universal Commerce Protocol merchant profile at /.well-known/ucp, a live UCP shopping MCP endpoint, and both OpenID Connect and RFC 8414 OAuth discovery documents for its customer account. The storefront exposes an anonymous read-only product and collection JSON surface, while every cart, checkout and order capability is confined to the identity-gated, idempotency-keyed MCP transport that requires contemporaneous human approval before payment.
 
-It has no developer portal and no published OpenAPI — but it is one of the more agent-forward
-storefronts in the network. On its own host it serves:
+**Areas:** Company · Beverages · Consumer Packaged Goods · Direct to Consumer · E-Commerce · Retail · Agentic Commerce · Universal Commerce Protocol · MCP · Shopify
 
-- **`/agents.md`** — a first-party agent instruction document, mirrored verbatim at **`/llms.txt`**, and
-  announced through a dedicated `sitemap_agentic_discovery.xml`.
-- **`robots.txt` as agent policy** — names the UCP endpoints, routes agents off the AJAX cart surfaces,
-  and states the buyer-approval invariant ("Checkouts are for humans").
-- **`/.well-known/ucp`** — a Universal Commerce Protocol merchant profile advertising protocol versions
-  `2026-04-08` and `2026-01-23`, eight negotiated capabilities, and three payment handlers.
-- **A live UCP shopping MCP endpoint** at `https://liquiddeath.myshopify.com/api/ucp/mcp` — 13 tools,
-  with `Idempotency-Key` **required** on `complete_checkout`, `cancel_checkout` and `cancel_cart`.
-- **Both** `/.well-known/openid-configuration` **and** `/.well-known/oauth-authorization-server` for the
-  customer account at `account.liquiddeath.com`.
+## Liquid Death on APIs.io
 
-The store runs a deliberate read/write split: the product and collection JSON surface is anonymous and
-read-only, while every transactional capability is confined to the identity-gated MCP transport. See
-`mcp/liquid-death-tool-crosswalk.yml` — 3 of 13 tools have a REST analogue, 10 are MCP-only.
+Everything profiled for Liquid Death is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/liquid-death/](https://apis.io/providers/liquid-death/)** — or go straight to one of the APIs or properties below.
 
-## Artifacts
+### APIs (4)
 
-| Path | What it is |
+- [Liquid Death UCP Shopping MCP](https://apis.io/apis/liquid-death/liquid-death-ucp-shopping-mcp/) — Liquid Death's hosted Model Context Protocol server implementing the Universal Commerce Protocol dev.ucp.shopping service — catalog search and lookup, cart,…
+- [Liquid Death Customer Account OAuth](https://apis.io/apis/liquid-death/liquid-death-customer-account-oauth/) — The OpenID Connect and OAuth 2.0 authorization server for the Liquid Death customer account, hosted at account.liquiddeath.com and discoverable from both…
+- [Liquid Death Discovery API](https://apis.io/apis/liquid-death/liquid-death-discovery-api/) — Store-level discovery documents for crawlers and agents
+- [Liquid Death Storefront JSON (Shopify)](https://apis.io/apis/liquid-death/liquiddeath-com-shopify-storefront-json/) — The Shopify Storefront JSON surface that Shopify generates for every Shopify site or store, served on liquiddeath.com. Catalogued as one platform-generated…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [liquid-death-ucp-shopping](https://apis.io/servers/liquid-death/liquid-death-ucp-shopping/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Liquid Death Agentic Access](https://apis.io/agentic-access/liquid-death/liquid-death-agentic-access/)
+
+#### Collections (1)
+
+Postman and Open Collection request collections.
+
+- [Liquid Death Storefront Read-Only JSON API](https://apis.io/collections/liquid-death/open-liquid-death-storefront/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Liquid Death Storefront Overlay](https://apis.io/overlays/liquid-death/liquid-death-storefront-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Liquid Death Authentication](https://apis.io/security/liquid-death/liquid-death-authentication/)
+- [Liquid Death Domain Security](https://apis.io/security/liquid-death/liquid-death-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Liquid Death Scopes](https://apis.io/scopes/liquid-death/liquid-death-scopes/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://liquiddeath.com/)
+- [Documentation](https://liquiddeath.com/agents.md)
+- [Getting started](https://liquiddeath.com/agents.md)
+- [Support](https://liquiddeath.com/pages/summon-us)
+- [Blog](https://liquiddeath.com/blogs/news)
+- [Terms of service](https://liquiddeath.com/policies/terms-of-service)
+- [Privacy policy](https://liquiddeath.com/policies/privacy-policy)
+
+## API Evangelist rating
+
+**Kin Score 32.2** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
 |---|---|
-| `openapi/liquid-death-storefront-openapi.yml` | OpenAPI 3.1 for the read-only storefront JSON surface. **Generated** by API Evangelist from the endpoints the provider documents in `/agents.md`; every operation probed live 2026-08-01. Not published by Liquid Death. |
-| `overlays/liquid-death-storefront-overlay.yaml` | Overlay 1.0.0 of our enhancements (agent policy, rate limits, pagination) |
-| `mcp/liquid-death-mcp.yml` | The UCP shopping MCP server manifest |
-| `mcp/liquid-death-ucp-shopping-mcp.openrpc.json` | The canonical UCP Shopping OpenRPC document the merchant's own profile declares as its MCP schema (verbatim) |
-| `mcp/liquid-death-tool-crosswalk.yml` | MCP tool ↔ REST operation binding, plus the MCP-only / REST-only divergences |
-| `llms/liquid-death-llms.txt` | `/llms.txt`, verbatim |
-| `well-known/` | UCP profile, OIDC + RFC 8414 metadata, robots.txt, and the probe index |
-| `authentication/`, `scopes/` | Anonymous / UCP agent-profile / customer OIDC model and the four advertised scopes |
-| `conventions/liquid-death-conventions.yml` | Idempotency, pagination, error envelopes, rate limiting, buyer context, human-in-the-loop |
-| `errors/liquid-death-problem-types.yml` | Observed errors on both surfaces, including the UCP `continue_url` recovery affordance |
-| `conformance/`, `lifecycle/`, `data-model/` | Standards conformance, UCP version support window, entity graph |
-| `security/liquid-death-domain-security.yml` | Probed TLS/HSTS/DNSSEC/CAA/SPF/DMARC |
-| `agentic-access/`, `skills/` | Generated `x-agentic-access` contracts and two packaged agent skills |
+| Discoverability | 58.3 |
+| Contract quality | 12.4 |
+| Contract governance | 4.5 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 42.3 |
+| Access clarity | 57.1 |
 
-## Not present
+**Agent readiness 35.0** — agent-ready
 
-No A2A agent card (`/.well-known/agent-card.json` and `/.well-known/agent.json` both 404 on
-`liquiddeath.com`, `liquiddeath.myshopify.com` and `account.liquiddeath.com`), no `security.txt`, no
-vulnerability disclosure program, no trust center, no status page, no changelog, no deprecation policy,
-no first-party SDK, CLI or GitHub organization, and no event/webhook surface.
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | na |
+| MCP Server | platform (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | na |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | platform (partial credit) |
 
-- Website: https://liquiddeath.com/
-- Agent instructions: https://liquiddeath.com/agents.md
-- Secondary market: https://forgeglobal.com/liquid-death_stock/
+**Regulatory alignment 34.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/liquid-death/](https://apis.io/providers/liquid-death/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Liquid Death: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/liquid-death/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
